@@ -416,7 +416,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .contact .wrap { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
 .contact__title { max-width: 700px; }
 .contact__row { margin: 8px 0 24px; }
-.contact__socials { display: flex; gap: 14px; flex-wrap: wrap; }
+.contact__socials { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 .contact__socials .pillbtn { padding: 12px 22px; font-size: 14px; }
 .contact__socials .pillbtn svg { flex-shrink: 0; }
 @media (hover: hover) and (pointer: fine) {

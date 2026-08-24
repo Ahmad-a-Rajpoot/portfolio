@@ -256,7 +256,13 @@
     const DRAG_THRESHOLD = 6;
     let pointerId = null, isDown = false, dragging = false, startX = 0, scrollStart = 0;
     wrap.addEventListener("pointerdown", (e) => {
-      if (e.button !== 0 && e.pointerType === "mouse") return;
+      // this hand-rolled drag exists only because a mouse has no native
+      // swipe-to-scroll gesture. Touch/pen already get real momentum
+      // scrolling for free from overflow-x:auto + touch-action:pan-x —
+      // running this JS path on top of that fought with it and left the
+      // page's vertical scroll stuck after a swipe on mobile.
+      if (e.pointerType !== "mouse") return;
+      if (e.button !== 0) return;
       isDown = true;
       dragging = false;
       pointerId = e.pointerId;
