@@ -248,21 +248,48 @@
     const wrap = document.getElementById("carousel");
     const track = document.getElementById("carouselTrack");
     if (!wrap || !track) return;
-    let isDown = false, startX = 0, scrollStart = 0;
+    // calling setPointerCapture on every pointerdown (even a plain tap on a
+    // link) makes Chromium retarget the resulting click to the capturing
+    // element, silently swallowing clicks on the project links. Only start
+    // capturing once the pointer has actually moved past a small threshold,
+    // so a stationary click/tap reaches its target normally.
+    const DRAG_THRESHOLD = 6;
+    let pointerId = null, isDown = false, dragging = false, startX = 0, scrollStart = 0;
     wrap.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0 && e.pointerType === "mouse") return;
       isDown = true;
-      wrap.classList.add("is-dragging");
+      dragging = false;
+      pointerId = e.pointerId;
       startX = e.clientX;
       scrollStart = wrap.scrollLeft;
-      wrap.setPointerCapture(e.pointerId);
     });
     wrap.addEventListener("pointermove", (e) => {
       if (!isDown) return;
-      wrap.scrollLeft = scrollStart - (e.clientX - startX);
+      const dx = e.clientX - startX;
+      if (!dragging) {
+        if (Math.abs(dx) < DRAG_THRESHOLD) return;
+        dragging = true;
+        wrap.classList.add("is-dragging");
+        wrap.setPointerCapture(pointerId);
+      }
+      wrap.scrollLeft = scrollStart - dx;
     });
-    ["pointerup", "pointercancel", "pointerleave"].forEach((ev) =>
-      wrap.addEventListener(ev, () => { isDown = false; wrap.classList.remove("is-dragging"); })
-    );
+    function endDrag() {
+      if (dragging) {
+        // a real drag happened: swallow the one click that would otherwise
+        // fire on whatever ended up under the pointer at release
+        const suppressClick = (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          wrap.removeEventListener("click", suppressClick, true);
+        };
+        wrap.addEventListener("click", suppressClick, true);
+      }
+      isDown = false;
+      dragging = false;
+      wrap.classList.remove("is-dragging");
+    }
+    ["pointerup", "pointercancel", "pointerleave"].forEach((ev) => wrap.addEventListener(ev, endDrag));
     // Deliberately no wheel/deltaY handling here: vertical scroll (mouse
     // wheel or trackpad) must pass through untouched to scroll the page.
     // Horizontal movement only comes from pointer-drag above, or native

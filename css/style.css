@@ -176,13 +176,13 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   z-index: 2; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
 }
 .stat-pill {
-  display: flex; align-items: baseline; gap: 8px;
+  display: flex; align-items: baseline; gap: 10px;
   background: rgba(18,18,31,0.7); backdrop-filter: blur(10px);
   border: 1px solid var(--line); border-radius: 999px;
-  padding: 10px 18px;
+  padding: 12px 22px;
 }
-.stat-pill b { font-family: var(--font-display); font-size: 20px; color: var(--mint); font-variant-numeric: tabular-nums; }
-.stat-pill small { font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .04em; }
+.stat-pill b { font-family: var(--font-display); font-size: 22px; color: var(--mint); font-variant-numeric: tabular-nums; }
+.stat-pill small { font-size: 12px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: .04em; }
 
 .scrolldown {
   position: absolute; right: 32px; bottom: 40px; z-index: 2;
@@ -438,8 +438,15 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   .scrolldown { display: none; }
   .hero__stats {
     position: static; transform: none; left: auto; bottom: auto; order: 3;
-    flex-direction: column; align-items: center; width: 100%; margin: 24px 0 0;
+    flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center;
+    width: 100%; margin: 28px 0 0; gap: 14px;
   }
   .hero__name { font-size: clamp(38px, 9vw, 64px); }
   .hero__sub { max-width: 420px; font-size: 16px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 480px) {
+  /* a row of three pills doesn't fit a narrow phone screen without
+     wrapping awkwardly — stack them, but sized generously since there's
+     no neighbor competing for width anymore */
+  .hero__stats { flex-direction: column; gap: 12px; }
 }
