@@ -631,7 +631,11 @@
     }
   }
 
-  if (!reduceMotion) {
+  // Phones don't get WebGL at all — two permanently-live 3D contexts plus
+  // heavy filters were repeatedly crashing mobile Safari's GPU process.
+  // The CSS-only .hero__fallback (see style.css) stands in visually.
+  const skipWebGL = window.innerWidth <= 720;
+  if (!reduceMotion && !skipWebGL) {
     buildHeroScene();
     buildOrbScene();
   }
