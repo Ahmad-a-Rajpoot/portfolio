@@ -277,8 +277,9 @@
     const canvas = document.getElementById("scene");
     if (!canvas || typeof THREE === "undefined") return;
 
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const isNarrow = window.innerWidth < 768;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isNarrow, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isNarrow ? 1.5 : 2));
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
@@ -511,8 +512,9 @@
     });
 
     const clock = new THREE.Clock();
+    let rafId = null;
     function animate() {
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
       const dt = Math.min(clock.getDelta(), 0.05);
       const t = clock.elapsedTime;
 
@@ -537,14 +539,25 @@
 
       renderer.render(scene, camera);
     }
-    animate();
+    // only render while the scene is actually on screen — two permanently
+    // live WebGL contexts (this one + the contact-section orb) is what was
+    // crashing mobile Safari's GPU process after a while
+    function startLoop() { if (rafId === null) animate(); }
+    function stopLoop() { if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } }
+    startLoop();
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach((e) => (e.isIntersecting ? startLoop() : stopLoop()));
+      }, { threshold: 0 }).observe(canvas);
+    }
   }
 
   function buildOrbScene() {
     const canvas = document.getElementById("orbCanvas");
     if (!canvas || typeof THREE === "undefined") return;
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const isNarrow = window.innerWidth < 768;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isNarrow, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isNarrow ? 1.5 : 2));
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
     camera.position.set(0, 0, 6);
@@ -569,15 +582,26 @@
     resize();
     window.addEventListener("resize", resize);
     const clock = new THREE.Clock();
+    let rafId = null;
     function animate() {
-      requestAnimationFrame(animate);
-      const dt = clock.getDelta();
+      rafId = requestAnimationFrame(animate);
+      const dt = Math.min(clock.getDelta(), 0.05);
       orb.rotation.y += dt * 0.15;
       orb.rotation.x += dt * 0.05;
       wire.rotation.y -= dt * 0.1;
       renderer.render(scene, camera);
     }
-    animate();
+    // this canvas sits at the bottom of the page — don't burn a live WebGL
+    // context rendering it before the user ever scrolls there
+    function startLoop() { if (rafId === null) animate(); }
+    function stopLoop() { if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach((e) => (e.isIntersecting ? startLoop() : stopLoop()));
+      }, { threshold: 0 }).observe(canvas);
+    } else {
+      startLoop();
+    }
   }
 
   if (!reduceMotion) {
