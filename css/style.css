@@ -109,9 +109,11 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   padding: 6px; font-size: 14px; font-weight: 500;
 }
 .nav__pill a { padding: 9px 16px; border-radius: 999px; color: var(--ink-dim); transition: color .2s, background .2s; }
-.nav__pill a:hover { color: var(--ink); background: rgba(255,255,255,0.06); }
 .nav__cta { background: var(--mint); color: var(--mint-ink) !important; font-weight: 600; }
-.nav__cta:hover { background: var(--ink) !important; }
+@media (hover: hover) and (pointer: fine) {
+  .nav__pill a:hover { color: var(--ink); background: rgba(255,255,255,0.06); }
+  .nav__cta:hover { background: var(--ink) !important; }
+}
 .nav__burger { display: none; }
 
 /* ============================================================
@@ -124,9 +126,15 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   transition: transform .3s var(--ease), background .3s, color .3s, box-shadow .3s;
 }
 .pillbtn--solid { background: var(--mint); color: var(--mint-ink); }
-.pillbtn--solid:hover { box-shadow: 0 10px 30px rgba(94,242,176,.3); }
 .pillbtn--ghost { border: 1px solid var(--line); color: var(--ink); }
-.pillbtn--ghost:hover { border-color: var(--mint); color: var(--mint); }
+/* :hover scoped to real pointer devices only — on touch, a hover style on
+   an element that sits inside something with its own touch handling (the
+   carousel's drag logic) makes iOS Safari treat the first tap as "hover"
+   and require a second tap to actually click. */
+@media (hover: hover) and (pointer: fine) {
+  .pillbtn--solid:hover { box-shadow: 0 10px 30px rgba(94,242,176,.3); }
+  .pillbtn--ghost:hover { border-color: var(--mint); color: var(--mint); }
+}
 .pillbtn--lg { padding: 20px 32px; font-size: 16px; }
 
 /* ============================================================
@@ -140,25 +148,38 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
    at all, so it can't repeat the mobile Safari crash the 3D scene caused.
    Hidden by default; shown only under the mobile breakpoint below. */
 .hero__fallback { display: none; position: relative; align-items: center; justify-content: center; }
-.hero__fallback-ring {
-  position: absolute; width: 58%; max-width: 240px; aspect-ratio: 1;
-  border-radius: 50%; background: radial-gradient(circle, rgba(94,242,176,.35), transparent 70%);
-  animation: fallbackPulse 4s ease-in-out infinite;
+.hero__fallback-glow {
+  position: absolute; width: 78%; max-width: 320px; aspect-ratio: 1; border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 34%, rgba(94,242,176,.32), transparent 62%),
+    radial-gradient(circle at 66% 68%, rgba(139,124,246,.22), transparent 60%);
+  animation: fallbackPulse 5s ease-in-out infinite;
+}
+.hero__fallback-orbit {
+  position: absolute; width: 66%; max-width: 270px; aspect-ratio: 1;
+  border: 1.5px dashed var(--line); border-radius: 50%;
+  animation: spin 26s linear infinite;
+}
+.hero__fallback-orbit::before {
+  content: ""; position: absolute; top: -3px; left: 50%; transform: translateX(-50%);
+  width: 7px; height: 7px; background: var(--mint); border-radius: 50%; box-shadow: 0 0 12px var(--mint);
 }
 .hero__fallback-blob {
-  position: relative; width: 40%; max-width: 180px; aspect-ratio: 1;
+  position: relative; width: 42%; max-width: 190px; aspect-ratio: 1;
   border-radius: 44% 56% 62% 38% / 48% 42% 58% 52%;
-  background: linear-gradient(155deg, #2b2c52, #1c1d33);
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255,255,255,.10), transparent 45%),
+    linear-gradient(155deg, #2f3062, #1a1b30);
   border: 2px solid var(--bg-elev-2);
-  box-shadow: 0 30px 60px -20px rgba(94,242,176,.25);
+  box-shadow: 0 30px 60px -20px rgba(94,242,176,.3), inset 0 1px 0 rgba(255,255,255,.06);
   animation: fallbackFloat 5s ease-in-out infinite;
 }
-.hero__fallback-chip { position: absolute; border-radius: 10px; animation: fallbackFloat 4s ease-in-out infinite; }
-.hero__fallback-chip--1 { width: 30px; height: 30px; background: var(--coral); top: 20%; right: 24%; transform: rotate(20deg); animation-delay: .2s; }
-.hero__fallback-chip--2 { width: 24px; height: 24px; border-radius: 50%; background: var(--violet); bottom: 24%; left: 22%; animation-delay: 1s; }
-.hero__fallback-chip--3 { width: 18px; height: 18px; border-radius: 50%; background: var(--mint); top: 32%; left: 26%; animation-delay: 1.8s; }
+.hero__fallback-chip { position: absolute; border-radius: 10px; animation: fallbackFloat 4s ease-in-out infinite; box-shadow: 0 8px 20px -6px rgba(0,0,0,.5); }
+.hero__fallback-chip--1 { width: 32px; height: 32px; background: var(--coral); top: 12%; right: 16%; transform: rotate(20deg); animation-delay: .2s; }
+.hero__fallback-chip--2 { width: 24px; height: 24px; border-radius: 50%; background: var(--violet); bottom: 16%; left: 14%; animation-delay: 1s; }
+.hero__fallback-chip--3 { width: 16px; height: 16px; border-radius: 50%; background: var(--mint); top: 24%; left: 18%; animation-delay: 1.8s; }
 @keyframes fallbackFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes fallbackPulse { 0%,100% { opacity: .5; transform: scale(1); } 50% { opacity: .8; transform: scale(1.06); } }
+@keyframes fallbackPulse { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: .85; transform: scale(1.06); } }
 .hero__vignette {
   position: absolute; inset: 0; pointer-events: none; z-index: 1;
   background: radial-gradient(ellipse 70% 60% at 50% 40%, transparent 40%, var(--bg) 100%);
@@ -361,7 +382,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   display: inline-block; font-weight: 600; color: var(--mint); font-size: 14px;
   border-bottom: 1px solid transparent; transition: border-color .2s, opacity .2s;
 }
-.workcard__link:hover { border-color: var(--mint); }
+@media (hover: hover) and (pointer: fine) {
+  .workcard__link:hover { border-color: var(--mint); }
+}
 .workcard--end {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 20px; text-align: center; border-style: dashed;
@@ -396,7 +419,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .contact__socials { display: flex; gap: 14px; flex-wrap: wrap; }
 .contact__socials .pillbtn { padding: 12px 22px; font-size: 14px; }
 .contact__socials .pillbtn svg { flex-shrink: 0; }
-.contact__socials .pillbtn:hover { background: var(--mint); color: var(--mint-ink); border-color: var(--mint); }
+@media (hover: hover) and (pointer: fine) {
+  .contact__socials .pillbtn:hover { background: var(--mint); color: var(--mint-ink); border-color: var(--mint); }
+}
 
 /* ============================================================
    FOOTER
@@ -490,4 +515,12 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   .hero__fallback { display: flex; }
   .contact__orb { display: none; }
   .contact { background: radial-gradient(ellipse 65% 55% at 50% 30%, rgba(94,242,176,.14), transparent 70%); }
+
+  /* the 400px fixed card width was wider than the screen itself on phones —
+     size to the viewport instead, with tighter padding/type so the card
+     still comfortably fits its own content */
+  .carousel__track { padding: 4px 20px 20px; gap: 16px; }
+  .workcard { width: min(82vw, 340px); padding: 26px; border-radius: 24px; }
+  .workcard h3 { font-size: 24px; }
+  .workcard__desc { font-size: 13px; }
 }
