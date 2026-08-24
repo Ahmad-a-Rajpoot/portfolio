@@ -503,16 +503,15 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   .hero__stats { flex-direction: column; gap: 12px; }
 }
 
-/* Phones only: no WebGL at all. Two permanently-updating 3D contexts plus
-   heavy filters were crashing mobile Safari's GPU process repeatedly
-   (the "A problem repeatedly occurred" page). Rather than keep tuning
-   WebGL load down, drop it entirely below this width and use the CSS-only
-   fallback visual instead — it cannot crash a renderer. main.js also
-   skips creating these WebGL contexts in the first place at this width,
-   this just covers layout. */
+/* Phones: the hero 3D scene runs here too (see main.js buildHeroScene) —
+   #scene stays visible by default. .hero__fallback is only switched to
+   display:flex by JS, and only if WebGL creation fails outright or the
+   context is later lost, so it never shows on top of a working canvas.
+   The contact orb — a second, decorative-only WebGL context — stays off
+   on phones; two contexts at once is the exact pattern three.js's docs
+   flag as a mobile Safari risk, and it was never worth that risk for a
+   background flourish. */
 @media (max-width: 720px) {
-  #scene { display: none; }
-  .hero__fallback { display: flex; }
   .contact__orb { display: none; }
   .contact { background: radial-gradient(ellipse 65% 55% at 50% 30%, rgba(94,242,176,.14), transparent 70%); }
 

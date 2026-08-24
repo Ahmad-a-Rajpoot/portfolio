@@ -300,13 +300,53 @@
   /* ==========================================================
      3D HERO SCENE — drag-to-orbit low-poly "workshop island"
      ========================================================== */
+  function showHeroFallback() {
+    const canvas = document.getElementById("scene");
+    const fallback = document.querySelector(".hero__fallback");
+    if (canvas) canvas.style.display = "none";
+    if (fallback) fallback.style.display = "flex";
+  }
+
   function buildHeroScene() {
     const canvas = document.getElementById("scene");
     if (!canvas || typeof THREE === "undefined") return;
 
     const isNarrow = window.innerWidth < 768;
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isNarrow, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isNarrow ? 1.5 : 2));
+    const isMobile = window.innerWidth <= 720;
+
+    // Two Three.js pitfalls are the documented cause of the mobile Safari
+    // crash this used to have: (1) running more than one WebGLRenderer at
+    // once (three.js's own manual: "avoids hitting the WebGL context
+    // limit, especially important for mobile") and (2) never handling
+    // context loss, which iOS Safari triggers under memory pressure far
+    // more readily than desktop. This scene is now the only WebGL context
+    // on the page below 721px (the contact orb stays CSS-only there), and
+    // it detects a too-weak GPU up front instead of forcing it.
+    let gl = null;
+    try {
+      gl = canvas.getContext("webgl2", { failIfMajorPerformanceCaveat: true, alpha: true })
+        || canvas.getContext("webgl", { failIfMajorPerformanceCaveat: true, alpha: true });
+    } catch (e) {
+      gl = null;
+    }
+    if (!gl) {
+      showHeroFallback();
+      return;
+    }
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      context: gl,
+      antialias: !isNarrow,
+      alpha: true,
+      powerPreference: isMobile ? "low-power" : "default",
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : isNarrow ? 1.5 : 2));
+
+    canvas.addEventListener("webglcontextlost", (e) => {
+      e.preventDefault();
+      showHeroFallback();
+    }, false);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
@@ -316,17 +356,23 @@
     const island = new THREE.Group();
     rig.add(island);
 
-    // ---- lights ----
+    // ---- lights ---- (mobile gets a cheaper 2-light setup instead of 4 —
+    // fewer lights means fewer per-fragment lighting passes on weaker GPUs)
     scene.add(new THREE.AmbientLight(0x40405a, 1.1));
     const key = new THREE.DirectionalLight(0x8ef7c8, 1.4);
     key.position.set(4, 6, 4);
     scene.add(key);
-    const rim = new THREE.PointLight(0xff7a6e, 2.2, 20);
-    rim.position.set(-4, 2, -3);
-    scene.add(rim);
-    const fill = new THREE.PointLight(0x8b7cf6, 1.4, 18);
-    fill.position.set(3, -1, -4);
-    scene.add(fill);
+    if (!isMobile) {
+      const rim = new THREE.PointLight(0xff7a6e, 2.2, 20);
+      rim.position.set(-4, 2, -3);
+      scene.add(rim);
+      const fill = new THREE.PointLight(0x8b7cf6, 1.4, 18);
+      fill.position.set(3, -1, -4);
+      scene.add(fill);
+    } else {
+      const fill = new THREE.AmbientLight(0x8b7cf6, 0.35);
+      scene.add(fill);
+    }
 
     const flat = true;
 
@@ -448,7 +494,7 @@
     rig.add(companion);
 
     // ---- starfield ----
-    const starCount = 240;
+    const starCount = isMobile ? 100 : 240;
     const starPos = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
       const r = 14 + Math.random() * 10;
@@ -631,12 +677,17 @@
     }
   }
 
-  // Phones don't get WebGL at all — two permanently-live 3D contexts plus
-  // heavy filters were repeatedly crashing mobile Safari's GPU process.
-  // The CSS-only .hero__fallback (see style.css) stands in visually.
-  const skipWebGL = window.innerWidth <= 720;
-  if (!reduceMotion && !skipWebGL) {
+  // The crash was two permanently-live WebGL contexts at once, which
+  // three.js's own docs flag as a mobile Safari risk ("avoids hitting the
+  // WebGL context limit, especially important for mobile"). The hero
+  // scene now runs everywhere (mobile included) as the page's only WebGL
+  // context there, tuned lighter for mobile and with context-loss and
+  // weak-GPU detection that fall back to CSS instead of crashing. The
+  // contact orb — a second, purely decorative context — stays desktop/
+  // tablet only, where two contexts was never actually a problem.
+  const isMobile = window.innerWidth <= 720;
+  if (!reduceMotion) {
     buildHeroScene();
-    buildOrbScene();
+    if (!isMobile) buildOrbScene();
   }
 })();
