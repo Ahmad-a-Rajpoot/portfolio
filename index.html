@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Ali Rajpoot | Portfolio</title>
+<meta name="description" content="Ahmad Ali Rajpoot: cybersecurity analyst, full-stack developer, and AI automation engineer. Drag to explore.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230b0c14%22/><circle cx=%2250%22 cy=%2250%22 r=%2222%22 fill=%22%235EF2B0%22/></svg>">
+<meta name="theme-color" content="#0a0a14">
+<meta name="color-scheme" content="dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a href="#top" class="skip-link">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <a href="#top" class="nav__logo">Ahmad<span class="dot">.</span></a>
+  <nav class="nav__pill" id="navPill">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#work">Work</a>
+    <a href="#journey">Journey</a>
+    <a href="assets/Ahmad_Ali_Rajpoot_CV.pdf" target="_blank" rel="noopener">CV</a>
+    <a href="#contact" class="nav__cta">Say hi</a>
+  </nav>
+  <button class="nav__burger" id="navBurger" aria-label="Menu"><span></span><span></span></button>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO / 3D SCENE ============ -->
+  <section class="hero" id="hero">
+    <canvas id="scene"></canvas>
+
+    <div class="hero__vignette" aria-hidden="true"></div>
+
+    <div class="hero__copy">
+      <p class="eyebrow reveal-word">Fullstack Developer &amp; Security Analyst</p>
+      <h1 class="hero__name">
+        <span class="reveal-line"><span>Hey, I’m</span></span>
+        <span class="reveal-line"><span class="ink-mint">Ahmad</span> Rajpoot.</span>
+      </h1>
+      <p class="hero__sub reveal-word">
+        I break things to understand them, then build things that don’t break.
+        Security by day, code by night, occasionally both at once.
+      </p>
+      <div class="hero__actions reveal-word">
+        <a href="#work" class="pillbtn pillbtn--solid magnetic">See my work</a>
+        <a href="#contact" class="pillbtn pillbtn--ghost magnetic">Let’s talk</a>
+      </div>
+    </div>
+
+    <div class="hero__hint" id="dragHint">
+      <span class="hero__hint-icon">✦</span>
+      drag to look around · click something
+    </div>
+
+    <div class="hero__stats">
+      <div class="stat-pill"><b data-count="4">0</b><small>Projects shipped</small></div>
+      <div class="stat-pill"><b data-count="15">0</b><small>Tools &amp; stacks</small></div>
+      <div class="stat-pill"><b data-count="2">0</b><small>Real clients</small></div>
+    </div>
+
+    <div class="scrolldown" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee">
+    <div class="marquee__track" id="marqueeTrack"></div>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="wrap about">
+      <div class="about__photo">
+        <div class="about__ring"></div>
+        <div class="about__blob">
+          <img src="assets/profile.jpg" alt="Ahmad Ali Rajpoot" width="280" height="280" loading="lazy">
+        </div>
+        <div class="about__chip about__chip--1">🛡️ Blue team</div>
+        <div class="about__chip about__chip--2">⚡ Ships fast</div>
+      </div>
+
+      <div class="about__copy">
+        <p class="tag-label">01 · About</p>
+        <h2 class="split-title">Half analyst,<br>half builder.</h2>
+        <p class="body-lg">
+          I’m a Cyber Security undergrad at COMSATS University Islamabad.
+          This past summer I worked as a SOC L1 analyst at LMKR, triaging
+          real incidents in Cortex&nbsp;XDR and tracing down what a flagged
+          file was actually doing before it became someone else’s bad day.
+        </p>
+        <p class="body-lg">
+          When I’m not studying, I’m building: full-stack apps, AI agents,
+          automation that quietly does the boring parts of someone’s job.
+          I’ve shipped a local-first personal OS for a returning freelance
+          client and an autonomous sales agent in a 24-hour hackathon. I like
+          the kind of problem that needs a developer’s patience and a
+          security analyst’s paranoia in the same afternoon.
+        </p>
+        <div class="about__facts">
+          <div class="fact"><span>Based in</span><b>Rawalpindi, Pakistan</b></div>
+          <div class="fact"><span>Most recent</span><b>SOC L1 @ LMKR</b></div>
+          <div class="fact"><span>Studying</span><b>B.S. Cyber Security, COMSATS</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS (physics bubbles) ============ -->
+  <section class="section section--dark" id="skills">
+    <div class="wrap">
+      <p class="tag-label">02 · Skills</p>
+      <h2 class="split-title">Poke around.</h2>
+      <p class="body-lg body-lg--narrow">
+        Everything below is real: the things I use to triage incidents,
+        ship products, and occasionally reverse-engineer something I
+        shouldn’t be able to. Drag a bubble, or just watch them dodge your cursor.
+      </p>
+    </div>
+    <div class="bubble-field" id="bubbleField"></div>
+  </section>
+
+  <!-- ============ WORK (drag carousel) ============ -->
+  <section class="section" id="work">
+    <div class="wrap">
+      <p class="tag-label">03 · Selected work</p>
+      <h2 class="split-title">Four things<br>I’m proud of.</h2>
+    </div>
+
+    <div class="carousel" id="carousel" tabindex="0" role="region" aria-label="Selected work, scroll horizontally">
+      <div class="carousel__track" id="carouselTrack">
+
+        <article class="workcard">
+          <div class="workcard__top">
+            <span class="workcard__badge workcard__badge--client">Client project</span>
+            <span class="workcard__index">01</span>
+          </div>
+          <h3>Life Map</h3>
+          <p class="workcard__sub">A local-first personal OS, built for a returning U.S. client</p>
+          <p class="workcard__desc">Every note lives as a plain-text file on the client’s own machine, fully Obsidian-compatible, with nothing living on a server he doesn’t control.</p>
+          <ul>
+            <li>Auto-prioritized dashboard from due dates &amp; tags</li>
+            <li>Visual roadmap + relationship graph across goals</li>
+            <li>XP, streaks &amp; achievements that don’t punish</li>
+            <li>AI assistant that edits the vault through conversation</li>
+            <li>Installs as a home-screen PWA</li>
+            <li>Password-gated, rate-limited, injection-hardened</li>
+          </ul>
+          <div class="workcard__tech"><span>Node.js</span><span>Obsidian API</span><span>PWA</span><span>AI Agent</span></div>
+          <div class="workcard__links">
+            <a href="https://dashboard-preview-gamma.vercel.app/" target="_blank" rel="noopener" class="workcard__link magnetic">Dashboard preview →</a>
+            <a href="https://github.com/whhothe/life-map" target="_blank" rel="noopener" class="workcard__link magnetic">View source →</a>
+          </div>
+        </article>
+
+        <article class="workcard">
+          <div class="workcard__top">
+            <span class="workcard__badge workcard__badge--hack">Hackathon</span>
+            <span class="workcard__index">02</span>
+          </div>
+          <h3>Vermilion</h3>
+          <p class="workcard__sub">Autonomous sales-intelligence agent, shipped in 24 hours</p>
+          <p class="workcard__desc">Research, outreach and meeting-setting run on autopilot, but nothing reaches a human without a human’s sign-off first.</p>
+          <ul>
+            <li>Evidence-grounded research, sources kept every time</li>
+            <li>Approval-gated outreach, nothing sent blind</li>
+            <li>Automated meeting scheduling with live video links</li>
+            <li>Persistent memory across restarts</li>
+          </ul>
+          <div class="workcard__tech"><span>AI Agents</span><span>Orchestration</span><span>Python</span></div>
+          <div class="workcard__links">
+            <a href="https://vermilion-sales-agent-production-c4d5.up.railway.app/" target="_blank" rel="noopener" class="workcard__link magnetic">Live demo →</a>
+          </div>
+        </article>
+
+        <article class="workcard">
+          <div class="workcard__top">
+            <span class="workcard__badge">Personal build</span>
+            <span class="workcard__index">03</span>
+          </div>
+          <h3>Secure LAN Platform</h3>
+          <p class="workcard__sub">Real-time messaging &amp; file-sharing, encrypted end to end</p>
+          <p class="workcard__desc">Built to trust nothing by default: every message and file encrypted, every key derived from a password only the user knows.</p>
+          <ul>
+            <li>Fernet encryption on every message &amp; transfer</li>
+            <li>PBKDF2 key derivation</li>
+            <li>Tamper-evident audit logs</li>
+            <li>Real-time delivery over Socket.IO</li>
+          </ul>
+          <div class="workcard__tech"><span>Python</span><span>Flask</span><span>Socket.IO</span><span>Cryptography</span></div>
+        </article>
+
+        <article class="workcard">
+          <div class="workcard__top">
+            <span class="workcard__badge">Research</span>
+            <span class="workcard__index">04</span>
+          </div>
+          <h3>Stripped Binary RE</h3>
+          <p class="workcard__sub">Reconstructing logic with zero symbols to lean on</p>
+          <p class="workcard__desc">Took a stripped binary apart in IDA Pro and Ghidra with no debug symbols and no source, then rebuilt its logic into annotated pseudocode by hand.</p>
+          <div class="workcard__tech"><span>IDA Pro</span><span>Ghidra</span><span>x86 Assembly</span></div>
+        </article>
+
+        <div class="workcard workcard--end">
+          <p>That’s the highlight reel.</p>
+          <a href="#contact" class="pillbtn pillbtn--solid magnetic">Want the full story?</a>
+        </div>
+
+      </div>
+    </div>
+    <div class="carousel__hint">drag →</div>
+  </section>
+
+  <!-- ============ JOURNEY ============ -->
+  <section class="section section--dark" id="journey">
+    <div class="wrap">
+      <p class="tag-label">04 · Journey</p>
+      <h2 class="split-title">Where the time went.</h2>
+
+      <div class="journey">
+        <div class="journey__item">
+          <div class="journey__year">2026</div>
+          <div class="journey__body">
+            <div class="journey__when">Jul 2026 - Aug 2026</div>
+            <h3>SOC Intern (SOC L1), LMKR</h3>
+            <p>Investigated as SOC L1 in Palo Alto Cortex XDR: triaged incidents, analyzed flagged files via VirusTotal/WildFire, and wrote up findings clean enough for L2 to act on without a follow-up question. Pulled asset, host and network context, coordinated with TAC. QA tested an unreleased EASM/DAST platform against live infrastructure. Completed BTLO SOC Labs, Incident Response and Digital Forensics challenges.</p>
+          </div>
+        </div>
+        <div class="journey__item">
+          <div class="journey__year">2023</div>
+          <div class="journey__body">
+            <div class="journey__when">Oct 2023 - Jul 2025</div>
+            <h3>Event Marketing, Idea Society COMSATS</h3>
+            <p>Led digital campaigns and coordinated cross-functional teams to plan and execute university events.</p>
+          </div>
+        </div>
+        <div class="journey__item">
+          <div class="journey__year">2023</div>
+          <div class="journey__body">
+            <div class="journey__when">Sep 2023 - Present</div>
+            <h3>B.S. Cyber Security, COMSATS University Islamabad</h3>
+            <p>Coursework and labs across offensive security, network defense and digital forensics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section contact" id="contact">
+    <canvas id="orbCanvas" class="contact__orb"></canvas>
+    <div class="wrap">
+      <p class="tag-label">05 · Contact</p>
+      <h2 class="split-title contact__title">Got something<br>worth building?</h2>
+      <p class="body-lg body-lg--contact">
+        Open to freelance work, internships, and security-first products
+        especially. Email’s the fastest way to reach me.
+      </p>
+      <div class="contact__row">
+        <a href="mailto:ahmadarajpoot87@gmail.com" class="pillbtn pillbtn--solid pillbtn--lg magnetic">ahmadarajpoot87@gmail.com</a>
+      </div>
+      <div class="contact__socials">
+        <a href="https://linkedin.com/in/ahmad-ali-rajpoot" target="_blank" rel="noopener" class="pillbtn pillbtn--ghost magnetic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/Ahmad-a-Rajpoot" target="_blank" rel="noopener" class="pillbtn pillbtn--ghost magnetic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.2c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.61-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.2C22 6.58 17.52 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <a href="https://instagram.com/ahmad._.rt_" target="_blank" rel="noopener" class="pillbtn pillbtn--ghost magnetic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.9 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07c-4.35.2-6.78 2.62-6.98 6.98C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 12 8a4 4 0 0 1 0 8zm6.41-10.44a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg>
+          Instagram
+        </a>
+        <button type="button" class="pillbtn pillbtn--ghost magnetic" id="discordCopy" data-discord="terracotta_p1e" aria-label="Copy Discord username, terracotta_p1e, to clipboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.38-.45.87-.61 1.26a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04c-1.7.29-3.34.8-4.89 1.52a.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13 13 0 0 1-1.87-.9.08.08 0 0 1-.01-.13c.13-.09.25-.19.37-.29a.07.07 0 0 1 .08-.01c3.93 1.8 8.18 1.8 12.06 0a.07.07 0 0 1 .08.01c.12.1.24.2.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.11c.36.7.78 1.37 1.23 2a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6.01-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42 0-1.34.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.09-2.16-2.42 0-1.34.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"/></svg>
+          <span class="discord-label" aria-live="polite">Discord</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© 2026 Ahmad Ali Rajpoot</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
