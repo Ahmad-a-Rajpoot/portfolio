@@ -350,8 +350,15 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
    WORK CAROUSEL
    ============================================================ */
 .carousel {
+  /* touch-action was pan-x, which doesn't just prefer horizontal — it
+     disallows the browser from ever treating a touch starting here as
+     vertical panning, trapping page scroll on any swipe that begins on a
+     card. Default touch-action (auto) lets the browser's own gesture
+     disambiguation decide the axis per swipe; overflow-y:hidden already
+     means there's nothing to scroll vertically here, so a vertical swipe
+     naturally scroll-chains up to the page on its own. */
   overflow-x: auto; overflow-y: hidden; cursor: grab; margin-top: 48px;
-  scrollbar-width: none; -ms-overflow-style: none; touch-action: pan-x;
+  scrollbar-width: none; -ms-overflow-style: none;
 }
 .carousel::-webkit-scrollbar { display: none; }
 .carousel.is-dragging { cursor: grabbing; }
